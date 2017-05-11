@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class WebConnector extends BasePage {
 
     public static WebDriver driver;
-    public static String browserName = "Mozilla";
+    public static String browserName = "Chrome";
 
     public static WebDriver getCurrentDriver() {
 
