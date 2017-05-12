@@ -1,5 +1,6 @@
 package Tests;
 
+import Pages.BugsPage;
 import Pages.SignInPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -11,6 +12,7 @@ import cucumber.api.java.en.When;
  */
 public class SignInTest {
     SignInPage signInPage = new SignInPage();
+    BugsPage bugsPage = new BugsPage();
 
     @Given("^I visit \"([^\"]*)\"$")
     public void iVisit(String arg0) throws Throwable {
@@ -19,6 +21,7 @@ public class SignInTest {
 
     @And("^I click \"([^\"]*)\" Link$")
     public void iClickLink(String arg0) throws Throwable {
+
         signInPage.clickSignInLink(arg0);
     }
 
@@ -50,6 +53,16 @@ public class SignInTest {
 
     @Then("^I should be redirected to \"([^\"]*)\" page$")
     public void iShouldBeRedirectedToPage(String arg0) throws Throwable {
-        signInPage.verifyOnForgotPasswordPage();
+        if (arg0.contains("forgot password")) {
+            signInPage.verifyOnForgotPasswordPage();
+        } else if (arg0.contains("forgot password")) {
+            bugsPage.verifyOnWomensCategoryPage();
+        } else if (arg0.equalsIgnoreCase("women category")) {
+            bugsPage.verifyOnWomensCategoryPage();
+        }
+
+
     }
+
+
 }

@@ -1,14 +1,13 @@
 package Pages;
 
 
-import com.gargoylesoftware.htmlunit.WebClient;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
 import java.util.List;
 
 import static Utils.WebConnector.getCurrentDriver;
@@ -48,14 +47,14 @@ public class BasePage {
 
     //    Click an element by locator
     public void click(By locator) {
-        waitForElement(locator);
+//        waitForElement(locator);
         findElement(locator).click();
 
     }
 
     //Input a text to a field
     public void writetoField(By locator, String text) {
-//
+        findElement(locator).clear();
         findElement(locator).sendKeys(text);
     }
 
@@ -65,7 +64,7 @@ public class BasePage {
     }
 
     //    Verify if an element is present on a page
-    public boolean isElementPresent(String  linktext) {
+    public boolean isElementPresent(String linktext) {
 
         if (findElements(By.linkText(linktext)).size() == 0) {
             return false;
@@ -91,9 +90,15 @@ public class BasePage {
     }
 
     //    Click a link
-    public void clickaLink(String linktext) {
+    public void clickaLink(String linktext) throws InterruptedException {
+//        waitForElement(linktext);
         findElement(linktext).click();
+
     }
+
+
+//    Login to the application
+
 
     //Gets the text and asserts for exact required text
     public void verifyTextofaField(By locator, String text) {
@@ -120,17 +125,29 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public void waitForElement(String linktext) {
+        WebDriverWait wait = new WebDriverWait(getCurrentDriver(), 30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(linktext)));
+    }
 
-    //    Gets and confirms the http status
-    public void confirm200HttpCode() throws IOException
+    //Mouse over an element
+    public void hoverOver(String linktext) {
+        Actions actions = new Actions(getCurrentDriver());
+        actions.moveToElement(findElement(linktext)).build().perform();
+    }
 
-    {
-        WebClient webClient = new WebClient();
-        int code = webClient.getPage(getCurrentDriver().getCurrentUrl()).getWebResponse().getStatusCode();
-        System.out.println(code);
-        int expCode = 200;
-        Assert.assertEquals(expCode, code);
+    //    Move to an element
+    public void moveToElement(By locator) {
+        WebElement element = findElement(locator);
+        Actions actions = new Actions(getCurrentDriver());
+        actions.moveToElement(element).build().perform();
+        actions.moveToElement(element).build().perform();
+    }
 
+    //Wait for an element to be Visible
+    public void waitForVisiblilityofElement(By locator) {
+        WebDriverWait wait = new WebDriverWait((getCurrentDriver()), 20);
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
     public void assertForCondition(String message, Boolean condition) {

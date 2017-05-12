@@ -14,12 +14,11 @@ Feature: Login
 
     Examples:
       | email                    | password          | result  |
-      | acgauravelly@gmail.com   | Pass123           | success |
       | correctemail@email.com   | correctpassword   | success |
       | incorrectemail@email.com | incorrectpassword | failure |
-    
-    @forgotpassword
-    Scenario:Forgot password
+
+  @forgotpassword
+  Scenario:Forgot password
     Given I visit "https://intu.co.uk/customer/account/login"
     And I click "Forgot Your Password?" Link
     Then I should be redirected to "forgot password" page
