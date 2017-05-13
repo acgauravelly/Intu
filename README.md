@@ -1,6 +1,7 @@
 # Intu
 Test cases and Tasks
 
+//test
 
 The file name Manual Testcases has all the test cases for the manual scenario assigned for login.They are all in BDD.
 The QA tasks document has the bugs found and the bug raised in Jira 
